@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author hubert.cardot
@@ -25,28 +27,32 @@ public class kPPV {
 		// exemples in learning set, using ComputeDistances
 		Double distances[] = new Double[NbClasses * NbExLearning];
 
-		// Double y[] = {5.1,3.5,1.4,0.2};
+		Double y[] = { 5.1, 3.5, 1.4, 0.2 };
 
 		// To be done
+		Double ma_liste[] = ComputeDistances(y, distances);
+
+		for (int i = 0; i < ma_liste.length; i++) {
+			System.out.println("Distance n° " + i + " = " + ma_liste[i]);
+		}
 	}
 
+	//OK
 	private static Double[] ComputeDistances(Double x[], Double distances[]) {
 		// ---compute the distance between an input data x to test and all examples in
 		// training set (in data)
-		Double distance_euclidienne = 0.0;
+		int t = 0;
+		for (int i = 0; i < NbClasses; i++) {
 
-		for (int i = 0; i < x.length; i++) {
-			for (int j = 0; j <= NbClasses; j++) {
-				for (int k = 0; k < NbEx; k++) {
-					for (int l = 0; l < NbFeatures; l++) {
+			for (int j = 0; j < NbExLearning; j++) {
 
-						Double dist = Math.sqrt(Math.pow((x[i] - data[j][k][l]), 2));
-
-					}
-				}
+				// calcul distance euclidienne
+				distances[t] = Math.sqrt(Math.pow(x[0] - data[i][j][0], 2) + Math.pow(x[1] - data[i][j][1], 2)
+						+ Math.pow(x[2] - data[i][j][2], 2) + Math.pow(x[3] - data[i][j][3], 2));
+				t++;
 			}
-		}
 
+		}
 		return distances;
 	}
 
