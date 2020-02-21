@@ -27,7 +27,7 @@ public class kPPV {
 		// exemples in learning set, using ComputeDistances
 		Double distances[] = new Double[NbClasses * NbExLearning];
 
-		Double y[] = { 5.1, 3.5, 1.4, 0.2 };
+		Double y[] = { 5.5, 2.3, 4.0, 1.3 };
 
 		// To be done
 		Double ma_liste[] = ComputeDistances(y, distances);
@@ -35,9 +35,11 @@ public class kPPV {
 		for (int i = 0; i < ma_liste.length; i++) {
 			System.out.println("Distance n� " + i + " = " + ma_liste[i]);
 		}
+
+		System.out.println(one_ppv(y, distances));
 	}
 
-	//OK
+	// OK
 	private static Double[] ComputeDistances(Double x[], Double distances[]) {
 		// ---compute the distance between an input data x to test and all examples in
 		// training set (in data)
@@ -54,6 +56,30 @@ public class kPPV {
 
 		}
 		return distances;
+	}
+
+	private static int one_ppv(Double x[], Double distances[]) {
+		int indexClass = 0;
+		Double res[] = ComputeDistances(x, distances);
+		Double resultat = res[0];
+		for (int i = 0; i < res.length; i++) {
+			if (res[i] < resultat) {
+				resultat = res[i];
+				indexClass = i;
+			}
+		}
+		if (indexClass < 25) {
+			return 1;
+		}
+		if (indexClass > 24 && indexClass < 50) {
+			return 2;
+		}
+		if (indexClass > 49) {
+			return 3;
+		}
+
+		return 0;
+
 	}
 
 	// ——-Reading data from iris.data file
