@@ -22,21 +22,21 @@ public class kPPV {
 		ReadFile();
 
 		// X is an exemple to classify (to take into data -test examples-)
-		Double X[] = new Double[NbFeatures];
+		//Double X[] = new Double[NbFeatures];
 		// distances: table to store all distances between the given exemple X and all
 		// exemples in learning set, using ComputeDistances
 		Double distances[] = new Double[NbClasses * NbExLearning];
 
-		Double y[] = { 5.5, 2.3, 4.0, 1.3 };
+		Double X[] = { 5.5, 2.3, 4.0, 1.3 };
 
 		// To be done
-		Double ma_liste[] = ComputeDistances(y, distances);
+		Double ma_liste[] = ComputeDistances(X, distances);
 
 		for (int i = 0; i < ma_liste.length; i++) {
 			System.out.println("Distance n° " + i + " = " + ma_liste[i]);
 		}
 
-		System.out.println(one_ppv(y, distances));
+		System.out.println(one_ppv(X, distances));
 	}
 
 	// OK
@@ -103,6 +103,7 @@ public class kPPV {
 					classe++;
 				}
 			}
+			fic.close();
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
