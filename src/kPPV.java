@@ -1,5 +1,7 @@
 import java.io.*;
-
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.Collection;
 
 /**
  * @author hubert.cardot
@@ -21,7 +23,7 @@ public class kPPV {
 		ReadFile();
 
 		// X is an exemple to classify (to take into data -test examples-)
-		//Double X[] = new Double[NbFeatures];
+		// Double X[] = new Double[NbFeatures];
 		// distances: table to store all distances between the given exemple X and all
 		// exemples in learning set, using ComputeDistances
 		Double distances[] = new Double[NbClasses * NbExLearning];
@@ -36,6 +38,22 @@ public class kPPV {
 		}
 
 		System.out.println(one_ppv(X, distances));
+
+		// preparation du K-PPV
+		System.out.println("Entrer le paramètre K, pour K plus proche voisins ");
+		Scanner sc = new Scanner(System.in);
+		int k = sc.nextInt();
+		sc.close();
+
+		Arrays.sort(ma_liste);
+		Double[] kPPV = new Double[k];
+
+		System.out.println("Disntaces des voisins les plus proches : ");
+		for (int i = 0; i < k; i++) {
+			kPPV[i] = ma_liste[i];
+			System.out.println("Voisin n°"+i+" "+ma_liste[i]);
+		}
+
 	}
 
 	// OK
