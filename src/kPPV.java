@@ -13,6 +13,7 @@ public class kPPV {
 	 * NbFeatures : Dimensionnalité de l'ensemble de données
 	 * NbExLearning : Nombre d'exemples par classe utilisés pour l'apprentissage (il y a les
 	 * les premiers dans le stockage des données pour chaque classe)
+	 * 
 	 */
 	static int NbEx = 50, NbClasses = 3, NbFeatures = 4, NbExLearning = 25;
 	static Double data[][][] = new Double[NbClasses][NbEx][NbFeatures];// there are 50*3 exemples at all. All have 4
