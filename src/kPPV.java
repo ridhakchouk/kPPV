@@ -24,7 +24,7 @@ public class kPPV {
 		ReadFile();
 
 		/**
-		 * 
+		* 
 		* X est un exemple à classer (à prendre en données - exemples de tests-)
 		* Double X[] = nouveau Double [NbFeatures] ;
 		* distances : tableau permettant de stocker toutes les distances entre l'exemple donné X et toutes
