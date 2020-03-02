@@ -2,16 +2,18 @@ import java.io.*;
 import java.util.Arrays;
 
 /**
- * @author hubert.cardot
+ *@author ridha.kchouk
+ * 
  */
 public class kPPV {
-	// General variables for dealing with Iris data (UCI repository)
-	// NbEx: number of data per class in dataset
-	// NbClasses: Number of classes to recognize
-	// NbFeatures: Dimensionality of dataset
-	// NbExLearning: Number of exemples per class used for learning (there are the
-	// first ones in data storage for each class)
-
+	/**
+	 *  Variables générales pour le traitement des données Iris (référentiel UCI)
+	 * NbEx : nombre de données par classe dans l'ensemble de données
+	 * NbClasses : Nombre de classes à reconnaître
+	 * NbFeatures : Dimensionnalité de l'ensemble de données
+	 * NbExLearning : Nombre d'exemples par classe utilisés pour l'apprentissage (il y a les
+	 * les premiers dans le stockage des données pour chaque classe)
+	 */
 	static int NbEx = 50, NbClasses = 3, NbFeatures = 4, NbExLearning = 25;
 	static Double data[][][] = new Double[NbClasses][NbEx][NbFeatures];// there are 50*3 exemples at all. All have 4
 																		// features
@@ -20,30 +22,36 @@ public class kPPV {
 		System.out.println("Starting kPPV");
 		ReadFile();
 
-		// X is an exemple to classify (to take into data -test examples-)
-		// Double X[] = new Double[NbFeatures];
-		// distances: table to store all distances between the given exemple X and all
-		// exemples in learning set, using ComputeDistances
+		/**
+		* X est un exemple à classer (à prendre en données - exemples de tests-)
+		* Double X[] = nouveau Double [NbFeatures] ;
+		* distances : tableau permettant de stocker toutes les distances entre l'exemple donné X et toutes
+		* exemples dans la série d'apprentissage, en utilisant ComputeDistances
+		*/
 		Double distances[] = new Double[NbClasses * NbExLearning];
 		Double X[] = { 5.4, 3.7, 1.5, 0.2 };
 		distances = ComputeDistances(X, distances);
 
-//		System.out.println("On calcul la distance par rapport aux données suivantes : { " + X[0] + "; " + X[1] + "; "
-//				+ X[2] + "; " + X[3] + " }");
-//		System.out.println("Liste des distances :");
-//		for (int i = 0; i < distances.length; i++) {
-//			System.out.println("Distance n° " + (i + 1) + " = " + distances[i]);
-//		}
+		System.out.println("On calcul la distance par rapport aux données suivantes : { " + X[0] + "; " + X[1] + "; "
+				+ X[2] + "; " + X[3] + " }");
+		System.out.println("Liste des distances :");
+		for (int i = 0; i < distances.length; i++) {
+			System.out.println("Distance n° " + (i + 1) + " = " + distances[i]);
+		}
 
-//		System.out.println("classe d'appartenance : " + one_ppv(X, distances));
-//		k_ppv(distances,3);
-//		preparation du K-PPV
+		System.out.println("classe d'appartenance : " + one_ppv(X, distances));
+		k_ppv(distances,3);
 
-		// confusion(data, distances);
+		confusion(data, distances);
 		knnconfusion(data,0);
 
 	}
 
+	/**
+	 * 
+	 * @implNote en cours de dev
+	 * 
+	 * */
 	public static void knnconfusion(Double data[][][],int knn) {
 		
 		Double tab[] = new Double[4];
@@ -63,6 +71,18 @@ public class kPPV {
 		}
 	}
 
+	
+	/**
+	 * 
+	 * @param data[][][]
+	 * 		tableau à trois dimension contenant respectivement [nombre_de_classe][nombre_element_par_classe][nombre_de_caracteristique]
+	 * 
+	 * @param distances[]
+	 * 		tableau contenant des distances de type Double
+	 * 
+	 * @return retourne une matrice de confusion
+	 * 
+	 * */
 	public static int[][] confusion(Double data[][][], Double distances[]) {
 		int conf_mat[][] = new int[3][3];
 		Double x[] = new Double[4];
@@ -109,27 +129,46 @@ public class kPPV {
 		return conf_mat;
 	}
 
-	// This function returnes a list of K NN where k is ask to be entered by user
-	// question 5
-	public static Double[] k_ppv(Double[] tab, int k) {
+
+	/**
+	 *@param x[]
+	 *		tableau contenant 4 éléments de type Double.
+	 *		il s'agit des coordonnées.
+	 *
+	 *@param k
+	 *		permet de déterminer combien de voisin la fonction doit
+	 *		retourner
+	 * 
+	 * @return retourne une liste de distance des k voisins plus proche
+	 */
+	public static Double[] k_ppv(Double x[], int k) {
 
 		Double[] res = new Double[k];
-		Arrays.sort(tab);
+		Arrays.sort(x);
 
 		System.out.println("Distances des K voisins les plus proches : ");
 		for (int i = 0; i < k; i++) {
-			res[i] = tab[i];
+			res[i] = x[i];
 			System.out.println("Voisin n°" + (i + 1) + " " + res[i]);
 		}
 
 		return res;
 	}
 
-	// This method return a list of distance according to an array which is
-	// containing coordinates
+	
+	/**
+	 *@param x[]
+	 *		tableau contenant 4 éléments de type Double.
+	 *		il s'agit des coordonnées.
+	 *
+	 *@param distances[]
+	 *		initialement tableau vide de Type double qui sera rempli
+	 *		au fur et à mesure en fonction du paramètre x[].
+	 *		Contiendra une liste de distance entre le param x[] et les autres points
+	 *		
+	 *@return retourne une liste de distance
+	 */
 	private static Double[] ComputeDistances(Double x[], Double distances[]) {
-		// ---compute the distance between an input data x to test and all examples in
-		// training set (in data)
 		int t = 0;
 		for (int i = 0; i < NbClasses; i++) {
 
@@ -145,7 +184,18 @@ public class kPPV {
 		return distances;
 	}
 
-	// This method return the class of X
+	/**
+	 *@param x[]
+	 *		tableau contenant 4 éléments de type Double.
+	 *		il s'agit des coordonnées.
+	 *
+	 *@param distances[]
+	 *		Tableau contenant plusieurs éléments de type Double.
+	 *		il s'agit d'une liste de distance par rapport au paramètre x[].
+	 *
+	 *@return retourne la classe de x[].
+	 *
+	 **/
 	private static int one_ppv(Double x[], Double distances[]) {
 		int indexClass = 0;
 		Double res[] = ComputeDistances(x, distances);
@@ -170,10 +220,12 @@ public class kPPV {
 
 	}
 
-	// â€”â€”-Reading data from iris.data file
-	// 1 line -> 1 exemple
-	// 50 first lines are 50 exemples of class 0, next 50 of class 1 and 50 of class
-	// 2
+	
+	/**
+	 *cette fonction permet la lecture du fichier de données
+	 *et remplit la variable "data" de ces données
+	 * 
+	 **/
 	private static void ReadFile() {
 
 		String line, subPart;
