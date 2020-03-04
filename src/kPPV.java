@@ -45,7 +45,7 @@ public class kPPV {
 		k_ppv(distances,3);
 
 		confusion(data, distances);
-		knnconfusion(data,0);
+		//knnconfusion(data,0);
 
 	}
 
@@ -66,15 +66,15 @@ public class kPPV {
 					tab[k]=data[i][j][k];
 				}
 				
-				System.out.println();
 			}
-			System.out.println();
+
 
 		}
 	}
 
 	
 	/**
+	 * Question 4
 	 * 
 	 * @param data[][][]
 	 * 		tableau à trois dimension contenant respectivement [nombre_de_classe][nombre_element_par_classe][nombre_de_caracteristique]
@@ -133,6 +133,7 @@ public class kPPV {
 
 
 	/**
+	 * Question 5 ..
 	 *@param x[]
 	 *		tableau contenant 4 éléments de type Double.
 	 *		il s'agit des coordonnées.
@@ -143,6 +144,7 @@ public class kPPV {
 	 * 
 	 * @return retourne une liste de distance des k voisins plus proche
 	 */
+	
 	public static Double[] k_ppv(Double x[], int k) {
 
 		Double[] res = new Double[k];
@@ -159,6 +161,7 @@ public class kPPV {
 
 	
 	/**
+	 * Question 2 :
 	 *@param x[]
 	 *		tableau contenant 4 éléments de type Double.
 	 *		il s'agit des coordonnées.
@@ -181,12 +184,12 @@ public class kPPV {
 						+ Math.pow(x[2] - data[i][j][2], 2) + Math.pow(x[3] - data[i][j][3], 2));
 				t++;
 			}
-
 		}
 		return distances;
 	}
 
 	/**
+	 * Question 3 :
 	 *@param x[]
 	 *		tableau contenant 4 éléments de type Double.
 	 *		il s'agit des coordonnées.
@@ -199,7 +202,7 @@ public class kPPV {
 	 *
 	 **/
 	private static int one_ppv(Double x[], Double distances[]) {
-		int indexClass = 0;
+		int indexClass = -1;
 		Double res[] = ComputeDistances(x, distances);
 		Double resultat = res[0];
 		for (int i = 0; i < res.length; i++) {
@@ -218,6 +221,7 @@ public class kPPV {
 			return 2;
 		}
 
+		// Retourne -1 en cas d'erreur
 		return -1;
 
 	}
