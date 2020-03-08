@@ -8,6 +8,7 @@ import java.util.Scanner;
  * 
  */
 public class kPPV {
+	
 	/**
 	 * Variables générales pour le traitement des données Iris (référentiel UCI)
 	 * NbEx : nombre de données par classe dans l'ensemble de données NbClasses :
@@ -17,6 +18,7 @@ public class kPPV {
 	 * chaque classe)
 	 * 
 	 */
+	
 	static int NbEx = 50, NbClasses = 3, NbFeatures = 4, NbExLearning = 25;
 	static Double data[][][] = new Double[NbClasses][NbEx][NbFeatures];// there are 50*3 exemples at all. All have 4
 																		// features
@@ -24,6 +26,8 @@ public class kPPV {
 	public static void main(String[] args) {
 		System.out.println("Starting kPPV");
 		ReadFile();
+		
+		
 		/**
 		 * 
 		 * X est un exemple à classer (à prendre en données - exemples de tests-) Double
@@ -31,6 +35,7 @@ public class kPPV {
 		 * toutes les distances entre l'exemple donné X et toutes exemples dans la série
 		 * d'apprentissage, en utilisant ComputeDistances
 		 */
+		
 		Double distances[] = new Double[NbClasses * NbExLearning];
 		Double X[] = { 4.8,3.4,1.9,0.2 };
 
@@ -56,13 +61,14 @@ public class kPPV {
 
 		}
 
+		confusion(data, distances);
 		
 		System.out.println("Entrée le paramètre K pour les K plus proches voisins : ");
 		int k = sc.nextInt();
 		kppv(X, distances, k);
 		sc.close();
 
-		confusion(data, distances);
+		
 
 	}
 
@@ -168,8 +174,8 @@ public class kPPV {
 	 *                    autres points
 	 * 
 	 * @return retourne une liste de distance
-	 */
-	private static Double[] ComputeDistances(Double x[], Double distances[]) {
+	 **/
+	public static Double[] ComputeDistances(Double x[], Double distances[]) {
 		int t = 0;
 		for (int i = 0; i < NbClasses; i++) {
 
@@ -197,7 +203,7 @@ public class kPPV {
 	 * @return retourne la classe de x[].
 	 *
 	 **/
-	private static int one_ppv(Double x[], Double distances[]) {
+	public static int one_ppv(Double x[], Double distances[]) {
 		Double res[] = ComputeDistances(x, distances);
 		Double resultat = res[0];
 		int indexClass = 99999;
@@ -223,8 +229,7 @@ public class kPPV {
 
 	}
 	
-	
-	private static int one_ppv_v2(Double x[], Double distances[]) {
+	public static int one_ppv_v2(Double x[], Double distances[]) {
 		Double res[] =distances;
 		Double resultat = res[0];
 		int indexClass = 99999;
@@ -251,38 +256,14 @@ public class kPPV {
 	}
 	
 	
-	private static int one_ppv_v3(Double x[], Double distances[]) {
-		Double res[] =distances;
-		Double resultat = res[0];
-		int indexClass = 99999;
-		for (int i = 0; i < res.length; i++) {
-			if (res[i] < resultat) {
-				resultat = res[i];
-				indexClass = i;
-
-			}
-		}
-		if (indexClass < NbExLearning) {
-			return 0;
-		}
-		if (indexClass > NbExLearning - 1 && indexClass < NbExLearning * 2) {
-			return 1;
-		}
-		if (indexClass > (NbExLearning * 2) - 1) {
-			return 2;
-		}
-
-		// Retourne -1 en cas d'erreur
-		return -1;
-
-	}
+	
 
 	/**
 	 * cette fonction permet la lecture du fichier de données et remplit la variable
 	 * "data" de ces données
 	 * 
 	 **/
-	private static void ReadFile() {
+	public static void ReadFile() {
 
 		String line, subPart;
 		int classe = 0, n = 0;
